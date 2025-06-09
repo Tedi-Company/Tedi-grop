@@ -66,12 +66,11 @@
   </div>
 
   <script>
-    // 🔐 Substitua com os dados reais do seu Supabase:
+    // 🔐 Substitua com seus dados reais:
     const SUPABASE_URL = 'https://kpazfnibnczjboakgmzi.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtwYXpmbmlibmN6amJvYWtnbXppIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk0ODcwMDQsImV4cCI6MjA2NTA2MzAwNH0.orTQf9Iah9rw4jdtGPgsXd_Wdq21dYsCnGeH6WZT_v4';
 
     const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
     const mensagem = document.getElementById('mensagem');
 
     async function logar() {
@@ -96,7 +95,7 @@
         mensagem.style.color = 'green';
         mensagem.textContent = 'Login bem-sucedido! Redirecionando...';
         setTimeout(() => {
-          window.location.href = 'dashboard.html'; // Altere aqui se quiser outra página
+          window.location.href = 'dashboard.html'; // Redireciona
         }, 1500);
       }
     }
