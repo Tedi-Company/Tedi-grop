@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .box {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.15);
+      text-align: center;
+    }
+    h1 {
+      color: #2c3e50;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #e74c3c;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    button:hover {
+      background-color: #c0392b;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>Bem-vindo!</h1>
+    <p id="user-email"></p>
+    <button onclick="logout()">Sair</button>
+  </div>
+
+  <script>
+    // 🔐 Use as mesmas chaves que usou no login
+    const SUPABASE_URL = 'https://SEU_PROJETO.supabase.co';
+    const SUPABASE_ANON_KEY = 'SUA_CHAVE_PUBLICA_AQUI';
+    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    async function verificarUsuario() {
+      const { data: { user }, error } = await supabase.auth.getUser();
+      if (error || !user) {
+        // Não está logado, redireciona
+        window.location.href = 'index.html';
+      } else {
+        document.getElementById('user-email').textContent = 'Logado como: ' + user.email;
+      }
+    }
+
+    async function logout() {
+      await supabase.auth.signOut();
+      window.location.href = 'index.html';
+    }
+
+    verificarUsuario();
+  </script>
+</body>
+</html>
