@@ -21,6 +21,16 @@
       align-items: center;
     }
 
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo img {
+      height: 40px;
+      margin-right: 10px;
+    }
+
     nav a {
       color: white;
       margin: 0 15px;
@@ -100,7 +110,10 @@
 </head>
 <body>
   <header>
-    <div><strong>Tedi Group</strong></div>
+    <div class="logo">
+      <img src="assets/logo.png" alt="Tedi Group Logo">
+      <strong>Tedi Group</strong>
+    </div>
     <nav>
       <a href="#servicos">Serviços</a>
       <a href="#sobre">Sobre</a>
