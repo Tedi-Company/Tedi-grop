@@ -2,180 +2,154 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>Tedi Group — Soluções Criativas</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tedi Group – Início</title>
   <style>
     body {
       margin: 0;
-      font-family: "Segoe UI", sans-serif;
-      background-color: #f7f9fc;
-      color: #333;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #0a192f;
+      color: #ffffff;
     }
 
     header {
-      background-color: #2c3e50;
+      background-color: #112240;
+      padding: 15px 30px;
       color: white;
-      padding: 20px 40px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    nav {
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
-    .logo img {
-      height: 40px;
+    nav .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #64ffda;
     }
 
-    nav a {
-      color: white;
-      margin: 0 15px;
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav ul li a {
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 16px;
+      transition: color 0.3s;
+    }
+
+    nav ul li a:hover {
+      color: #64ffda;
+    }
+
+    main {
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #64ffda;
+      font-size: 36px;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 18px;
+      max-width: 800px;
+      margin: 0 auto 40px;
+      color: #cfd8dc;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 25px;
+      background-color: #64ffda;
+      color: #0a192f;
+      font-weight: bold;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: background-color 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #52d0c2;
+    }
+
+    .educacao-section {
+      background-color: #112240;
+      padding: 60px 20px;
+    }
+
+    .educacao-section h2 {
+      font-size: 32px;
+      color: #64ffda;
+      margin-bottom: 20px;
+    }
+
+    .educacao-section p {
+      font-size: 18px;
+      max-width: 800px;
+      margin: auto;
+      margin-bottom: 30px;
+      color: #cfd8dc;
+    }
+
+    .educacao-section .btn {
+      background-color: #64ffda;
+      color: #0a192f;
+      padding: 10px 20px;
       text-decoration: none;
       font-weight: bold;
+      border-radius: 6px;
     }
 
-    .banner {
-      background: linear-gradient(to right, #3498db, #2ecc71);
-      color: white;
-      padding: 80px 40px;
-      text-align: center;
-    }
-
-    .banner h1 {
-      font-size: 48px;
-      margin-bottom: 20px;
-    }
-
-    .servicos {
-      padding: 50px 40px;
-      background-color: white;
-    }
-
-    .servicos h2 {
-      text-align: center;
-      margin-bottom: 40px;
-    }
-
-    .cards {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 30px;
-    }
-
-    .card {
-      background: #ecf0f1;
-      padding: 30px;
-      border-radius: 12px;
-      width: 250px;
-      text-align: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-
-    .sobre {
-      padding: 50px 40px;
-      background-color: #f1f1f1;
-    }
-
-    .sobre h2 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .games {
-      padding: 50px 40px;
-      background-color: #eef6ff;
-    }
-
-    .games h2 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .games p {
-      text-align: center;
-      max-width: 700px;
-      margin: 0 auto 30px;
+    .educacao-section .btn:hover {
+      background-color: #52d0c2;
     }
 
     footer {
-      background-color: #2c3e50;
-      color: white;
+      background-color: #112240;
       text-align: center;
       padding: 20px;
-      margin-top: 40px;
-    }
-
-    .btn-login {
-      background-color: #e67e22;
-      color: white;
-      padding: 10px 20px;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    .btn-login:hover {
-      background-color: #d35400;
+      color: #888;
     }
   </style>
 </head>
 <body>
   <header>
-    <div class="logo">
-      <img src="assets/logo.jpg" alt="Logo" />
-    </div>
     <nav>
-      <a href="#servicos">Serviços</a>
-      <a href="jogos/index.html">Jogos</a>
-      <a href="blog/index.html">Blog</a>
-      <a href="#sobre">Sobre</a>
-      <a href="#contato">Contato</a>
-      <a href="login/index.html" class="btn-login">Login</a>
+      <div class="logo">Tedi Group</div>
+      <ul>
+        <li><a href="/Tedi-grop/index.html">Início</a></li>
+        <li><a href="/Tedi-grop/jogos/index.html">Jogos</a></li>
+        <li><a href="/Tedi-grop/blog/index.html">Blog</a></li>
+        <li><a href="/Tedi-grop/educacao/index.html">Educação</a></li>
+      </ul>
     </nav>
   </header>
 
-  <div class="banner">
-    <h1>Transformamos ideias em soluções digitais</h1>
-    <p>Serviços modernos, rápidos e acessíveis</p>
-  </div>
+  <main>
+    <h1>Bem-vindo à Tedi Group</h1>
+    <p>Oferecemos jogos, conteúdos educacionais e soluções inovadoras para todos os públicos.</p>
+    <a class="btn" href="/Tedi-grop/jogos/index.html">Explorar Jogos</a>
+  </main>
 
-  <section class="servicos" id="servicos">
-    <h2>Nossos Serviços</h2>
-    <div class="cards">
-      <div class="card">
-        <h3>Desenvolvimento Web</h3>
-        <p>Sites responsivos, modernos e seguros para todos os dispositivos.</p>
-      </div>
-      <div class="card">
-        <h3>Aplicações Interativas</h3>
-        <p>Games, sistemas web e apps com performance e design profissional.</p>
-      </div>
-      <div class="card">
-        <h3>Automação & Scripts</h3>
-        <p>Ferramentas que economizam tempo e melhoram seu dia a dia.</p>
-      </div>
-    </div>
+  <section class="educacao-section">
+    <h2>Nós nos importamos com a educação</h2>
+    <p>A Tedi Group acredita no poder da educação como uma ferramenta de transformação. Criamos conteúdos educacionais interativos e acessíveis para ajudar no aprendizado de forma divertida.</p>
+    <a class="btn" href="/Tedi-grop/educacao/index.html">Conheça nossa iniciativa</a>
   </section>
 
-  <section class="games" id="games">
-    <h2>Jogos Criados por Nós</h2>
-    <p>
-      Desenvolvemos jogos online divertidos, criativos e acessíveis direto no navegador. Clique no botão abaixo para explorar!
-    </p>
-    <div style="text-align: center;">
-      <a href="jogos/index.html" class="btn-login">Ver Jogos</a>
-    </div>
-  </section>
-
-  <section class="sobre" id="sobre">
-    <h2>Sobre Nós</h2>
-    <p style="text-align: center; max-width: 700px; margin: auto;">
-      A <strong>Tedi Group</strong> é uma equipe apaixonada por tecnologia e inovação. Criamos soluções sob medida para nossos clientes, com foco em criatividade, funcionalidade e qualidade.
-    </p>
-  </section>
-
-  <footer id="contato">
-    <p>© 2025 Tedi Group. Todos os direitos reservados.</p>
-    <p>Email: contato@tedi-group.com</p>
+  <footer>
+    &copy; 2025 Tedi Group. Todos os direitos reservados.
   </footer>
 </body>
 </html>
