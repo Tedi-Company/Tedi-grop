@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Busca Web - Tedi Group</title>
+<style>
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #0a192f;
+    color: #cfd8dc;
+    margin: 0;
+    padding: 20px;
+  }
+  header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  input[type="text"] {
+    width: 80%;
+    max-width: 500px;
+    padding: 10px;
+    font-size: 18px;
+    border-radius: 6px;
+    border: none;
+  }
+  button {
+    padding: 10px 18px;
+    font-size: 18px;
+    margin-left: 10px;
+    border: none;
+    border-radius: 6px;
+    background-color: #64ffda;
+    color: #0a192f;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  button:hover {
+    background-color: #52d0c2;
+  }
+  #results {
+    margin-top: 30px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .result-item {
+    background: #112240;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+  }
+  .result-item a {
+    color: #64ffda;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 18px;
+  }
+  .result-item a:hover {
+    text-decoration: underline;
+  }
+  .result-snippet {
+    margin-top: 8px;
+    font-size: 15px;
+    color: #cfd8dc;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Busca Web Tedi Group</h1>
+  <input id="searchInput" type="text" placeholder="Digite sua busca..." />
+  <button onclick="search()">Buscar</button>
+</header>
+
+<section id="results"></section>
+
+<script>
+  function search() {
+    const query = document.getElementById('searchInput').value.trim();
+    if (!query) {
+      alert('Por favor, digite algo para buscar!');
+      return;
+    }
+    // Limpa resultados anteriores
+    const resultsEl = document.getElementById('results');
+    resultsEl.innerHTML = '<p>Carregando resultados...</p>';
+
+    // Cria o callback para JSONP
+    window.ddgCallback = function(data) {
+      resultsEl.innerHTML = '';
+      if (!data.RelatedTopics || data.RelatedTopics.length === 0) {
+        resultsEl.innerHTML = '<p>Nenhum resultado encontrado.</p>';
+        return;
+      }
+      data.RelatedTopics.forEach(item => {
+        let resultTitle = '';
+        let resultUrl = '';
+        let resultText = '';
+        if(item.Text && item.FirstURL) {
+          resultTitle = item.Text;
+          resultUrl = item.FirstURL;
+          resultText = item.Text;
+        } else if (item.Topics) {
+          // Alguns resultados tem sub tópicos
+          item.Topics.forEach(subItem => {
+            if(subItem.Text && subItem.FirstURL) {
+              resultsEl.innerHTML += renderResult(subItem.Text, subItem.FirstURL);
+            }
+          });
+          return;
+        }
+        resultsEl.innerHTML += renderResult(resultTitle, resultUrl);
+      });
+    };
+
+    // Remove o script antigo se existir
+    const oldScript = document.getElementById('ddgScript');
+    if (oldScript) oldScript.remove();
+
+    // Insere o script JSONP na página
+    const script = document.createElement('script');
+    script.id = 'ddgScript';
+    script.src = `https://api.duckduckgo.com/?q=${encodeURIComponent(query)}&format=json&pretty=1&callback=ddgCallback`;
+    document.body.appendChild(script);
+  }
+
+  function renderResult(title, url) {
+    return `
+      <div class="result-item">
+        <a href="${url}" target="_blank" rel="noopener noreferrer">${title}</a>
+      </div>
+    `;
+  }
+</script>
+
+</body>
+</html>
