@@ -2,13 +2,56 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>Educação – Selecione o Tipo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Educação – Tedi Group</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #e0f7fa, #ffffff);
+      color: #333;
+    }
+
+    header {
+      background-color: #2c3e50;
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+      font-size: 24px;
+    }
+
+    main {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: calc(100vh - 100px);
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .btn {
+      padding: 15px 30px;
+      font-size: 18px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #2980b9;
+    }
+  </style>
 </head>
 <body>
-  <h1>Bem-vindo à área de Educação</h1>
-  <p>Escolha o tipo de conteúdo:</p>
-  <a href="material/index.html">
-    <button>Material</button>
-  </a>
+  <header>
+    Selecione o tipo de conteúdo educacional
+  </header>
+
+  <main>
+    <a href="../material/index.html" class="btn">Material</a>
+  </main>
 </body>
 </html>
