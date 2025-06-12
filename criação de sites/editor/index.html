@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Editor Visual – Tedi Group</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f0f0f0;
+    }
+
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+    }
+
+    .editor-area {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .editable {
+      border: 2px dashed #ccc;
+      padding: 10px;
+      margin-bottom: 20px;
+      min-height: 40px;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin-right: 10px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #2980b9;
+    }
+
+    textarea {
+      width: 100%;
+      height: 200px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Editor Visual de Sites – Tedi Group</h1>
+
+  <div class="editor-area">
+    <div class="editable" contenteditable="true" id="titulo">Clique aqui para editar o título</div>
+    <div class="editable" contenteditable="true" id="texto">Clique aqui para editar o texto principal</div>
+    <div class="editable" contenteditable="true" id="botao">Clique aqui para editar o botão</div>
+
+    <button onclick="gerarHTML()">Exportar HTML</button>
+
+    <textarea id="codigoHTML" placeholder="O HTML exportado aparecerá aqui..."></textarea>
+  </div>
+
+  <script>
+    function gerarHTML() {
+      const titulo = document.getElementById("titulo").innerHTML;
+      const texto = document.getElementById("texto").innerHTML;
+      const botao = document.getElementById("botao").innerHTML;
+
+      const htmlFinal = `
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head><meta charset="UTF-8"><title>Site Personalizado</title></head>
+<body>
+  <h1>${titulo}</h1>
+  <p>${texto}</p>
+  <button>${botao}</button>
+</body>
+</html>`;
+
+      document.getElementById("codigoHTML").value = htmlFinal.trim();
+    }
+  </script>
+</body>
+</html>
