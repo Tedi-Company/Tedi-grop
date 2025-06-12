@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Página Infantil</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background: linear-gradient(to bottom, #aee1f9, #ffffff);
+      color: #444;
+    }
+
+    header {
+      background-color: #ffcc70;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 36px;
+      color: #ff4081;
+    }
+
+    nav {
+      background-color: #ffd700;
+      padding: 10px 0;
+      text-align: center;
+    }
+
+    nav a {
+      text-decoration: none;
+      margin: 0 15px;
+      font-size: 18px;
+      color: #333;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      color: #ff4081;
+    }
+
+    main {
+      text-align: center;
+      padding: 50px 20px;
+    }
+
+    main h2 {
+      font-size: 28px;
+      color: #2196f3;
+    }
+
+    main p {
+      font-size: 18px;
+      color: #555;
+      max-width: 600px;
+      margin: 0 auto 30px;
+    }
+
+    .btn {
+      background-color: #ff4081;
+      color: white;
+      padding: 12px 25px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 16px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    }
+
+    .btn:hover {
+      background-color: #e73370;
+    }
+
+    footer {
+      background-color: #ffcc70;
+      text-align: center;
+      padding: 15px;
+      font-size: 14px;
+      color: #333;
+    }
+
+    .clouds {
+      position: absolute;
+      width: 100%;
+      top: 0;
+      left: 0;
+      background-image: url('');
+      background-repeat: repeat-x;
+      height: 120px;
+      animation: floatClouds 60s linear infinite;
+    }
+
+    @keyframes floatClouds {
+      from { background-position: 0 0; }
+      to { background-position: 10000px 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="clouds"></div>
+
+  <header>
+    <h1>Bem-vindo ao Mundo Divertido!</h1>
+  </header>
+
+  <nav>
+    <a href="#">Início</a>
+    <a href="#">Jogos</a>
+    <a href="#">Atividades</a>
+    <a href="#">Contato</a>
+  </nav>
+
+  <main>
+    <h2>Explore, Aprenda e Divirta-se!</h2>
+    <p>Essa página foi criada especialmente para crianças! Aqui você encontra jogos, atividades e muito mais para aprender brincando.</p>
+    <a href="#" class="btn">Começar Agora</a>
+  </main>
+
+  <footer>
+    &copy; 2025 Mundo Infantil. Todos os direitos reservados.
+  </footer>
+</body>
+</html>
