@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Editor Visual – Tedi Group</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #0a192f;
+      color: white;
+    }
+
+    header {
+      background-color: #112240;
+      padding: 15px 30px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 22px;
+      color: #64ffda;
+    }
+
+    main {
+      padding: 20px;
+    }
+
+    .editable {
+      border: 2px dashed #64ffda;
+      padding: 10px;
+      margin: 10px 0;
+      cursor: pointer;
+    }
+
+    #controls {
+      position: fixed;
+      bottom: 15px;
+      right: 15px;
+      background: #112240;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.6);
+      z-index: 1000;
+    }
+
+    #controls label {
+      display: block;
+      margin-top: 10px;
+      color: #64ffda;
+      font-size: 14px;
+    }
+
+    #controls input,
+    #controls select {
+      width: 100%;
+      padding: 6px;
+      border-radius: 4px;
+      border: none;
+      margin-top: 5px;
+      margin-bottom: 10px;
+    }
+
+    #exportBtn {
+      background: #64ffda;
+      color: #0a192f;
+      font-weight: bold;
+      border: none;
+      padding: 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    #exportBtn:hover {
+      background: #52d0c2;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Editor Visual – Tedi Group</h1>
+  </header>
+
+  <main contenteditable="false">
+    <h2 class="editable">Título editável</h2>
+    <p class="editable">Este é um parágrafo de exemplo. Você pode clicar para editar o texto.</p>
+  </main>
+
+  <div id="controls">
+    <label for="widthControl">Largura (%)</label>
+    <input type="range" id="widthControl" min="10" max="100" value="100">
+    
+    <label for="fontSizeControl">Tamanho da Fonte (px)</label>
+    <input type="number" id="fontSizeControl" min="8" max="72" value="16">
+    
+    <label for="textAlignControl">Alinhamento</label>
+    <select id="textAlignControl">
+      <option value="left">Esquerda</option>
+      <option value="center">Centro</option>
+      <option value="right">Direita</option>
+    </select>
+
+    <button id="exportBtn">Exportar HTML</button>
+  </div>
+
+  <script>
+    let selected = null;
+
+    document.querySelectorAll('.editable').forEach(el => {
+      el.addEventListener('click', () => {
+        selected = el;
+        document.getElementById('widthControl').value = parseInt(selected.style.width) || 100;
+        document.getElementById('fontSizeControl').value = parseInt(window.getComputedStyle(selected).fontSize);
+        document.getElementById('textAlignControl').value = selected.style.textAlign || "left";
+      });
+    });
+
+    document.getElementById('widthControl').addEventListener('input', (e) => {
+      if (selected) {
+        selected.style.width = e.target.value + "%";
+      }
+    });
+
+    document.getElementById('fontSizeControl').addEventListener('input', (e) => {
+      if (selected) {
+        selected.style.fontSize = e.target.value + "px";
+      }
+    });
+
+    document.getElementById('textAlignControl').addEventListener('change', (e) => {
+      if (selected) {
+        selected.style.textAlign = e.target.value;
+      }
+    });
+
+    document.getElementById('exportBtn').addEventListener('click', () => {
+      const fullHtml = `
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Site Criado</title>
+</head>
+<body>
+${document.querySelector('main').innerHTML}
+<div style="position:fixed;bottom:10px;right:10px;font-size:12px;color:#aaa;">
+  <a href="https://tedi-company.github.io/Tedi-grop/criação de sites/index.html" target="_blank" style="color:#aaa;text-decoration:none;">feito com Tedi Group</a>
+</div>
+</body>
+</html>`;
+      const blob = new Blob([fullHtml], {type: "text/html"});
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'site_tedi_group.html';
+      link.click();
+      URL.revokeObjectURL(url);
+    });
+  </script>
+</body>
+</html>
