@@ -1,90 +1,91 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <title>Editor Visual – Tedi Group</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 20px;
-      background-color: #f0f0f0;
-    }
-
-    h1 {
-      text-align: center;
-      color: #2c3e50;
-    }
-
-    .editor-area {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-
-    .editable {
-      border: 2px dashed #ccc;
-      padding: 10px;
-      margin-bottom: 20px;
-      min-height: 40px;
-    }
-
-    button {
-      padding: 10px 20px;
-      margin-right: 10px;
-      background-color: #3498db;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #2980b9;
-    }
-
-    textarea {
-      width: 100%;
-      height: 200px;
-      margin-top: 20px;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Editor Visual – Tedi Group</title>
+<style>
+  :root{--azul:#112240;--verde:#64ffda}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',sans-serif;background:#f4f7f8;min-height:100vh;display:flex;flex-direction:column}
+  header{background:var(--azul);color:#fff;padding:20px;text-align:center}
+  #controls{display:flex;gap:10px;justify-content:center;background:#e0e0e0;padding:12px;border-bottom:1px solid #ccc}
+  button{background:var(--verde);color:#0a192f;padding:8px 16px;border:none;border-radius:6px;cursor:pointer;font-weight:600}
+  button:hover{background:#52d0c2}
+  #workArea{flex:1;max-width:1000px;margin:25px auto;padding:0 15px;display:flex;flex-direction:column;gap:25px}
+  #workArea section{background:#fff;padding:25px;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,.1)}
+  [contenteditable]{outline:2px dashed transparent}
+  [contenteditable]:focus{outline-color:var(--verde);background:#e8f9ff}
+  /* drag visual cue */
+  #workArea section.dragging{opacity:.4}
+</style>
 </head>
 <body>
-  <h1>Editor Visual de Sites – Tedi Group</h1>
+  <header><h1>Editor Visual de Sites – Tedi Group</h1></header>
 
-  <div class="editor-area">
-    <div class="editable" contenteditable="true" id="titulo">Clique aqui para editar o título</div>
-    <div class="editable" contenteditable="true" id="texto">Clique aqui para editar o texto principal</div>
-    <div class="editable" contenteditable="true" id="botao">Clique aqui para editar o botão</div>
-
-    <button onclick="gerarHTML()">Exportar HTML</button>
-
-    <textarea id="codigoHTML" placeholder="O HTML exportado aparecerá aqui..."></textarea>
+  <div id="controls">
+    <button onclick="loadExample('ecologico')">Exemplo Ecológico</button>
+    <button onclick="loadExample('infantil')">Exemplo Infantil</button>
+    <button onclick="exportHTML()">Exportar HTML</button>
   </div>
 
-  <script>
-    function gerarHTML() {
-      const titulo = document.getElementById("titulo").innerHTML;
-      const texto = document.getElementById("texto").innerHTML;
-      const botao = document.getElementById("botao").innerHTML;
+  <div id="workArea"><!-- modelo carregado aparece aqui --></div>
 
-      const htmlFinal = `
-<!DOCTYPE html>
+<script>
+const paths={
+  ecologico:"/Tedi-grop/tedidev/topsorbankda/banco%20de%20dados/linguagem/html/import/ecologico/pagina_inicial_ecologica/index.html",
+  infantil:"/Tedi-grop/tedidev/topsorbankda/banco%20de%20dados/linguagem/html/import/infantil/pagina_infantil1/index.html"
+};
+
+async function loadExample(type){
+  const url=paths[type];
+  if(!url){alert("Exemplo não encontrado");return;}
+  const res=await fetch(url);const text=await res.text();
+  const temp=new DOMParser().parseFromString(text,"text/html");
+  const bodyHTML=temp.body.innerHTML;
+  const area=document.getElementById("workArea");
+  area.innerHTML=bodyHTML;
+  makeEditableAndDraggable(area);
+}
+
+function makeEditableAndDraggable(container){
+  // tornar editáveis títulos, subtítulos e parágrafos
+  container.querySelectorAll("h1,h2,p").forEach(el=>el.setAttribute("contenteditable","true"));
+  // drag‑and‑drop para cada seção direta em workArea
+  container.querySelectorAll("section").forEach(sec=>{
+    sec.draggable=true;
+    sec.addEventListener("dragstart",()=>sec.classList.add("dragging"));
+    sec.addEventListener("dragend",()=>sec.classList.remove("dragging"));
+  });
+  container.addEventListener("dragover",e=>{
+    e.preventDefault();
+    const dragging=document.querySelector(".dragging");
+    const sections=[...container.querySelectorAll("section:not(.dragging)")];
+    const next=sections.find(s=>e.clientY<s.getBoundingClientRect().top+ s.offsetHeight/2);
+    container.insertBefore(dragging,next);
+  });
+}
+
+function exportHTML(){
+  const content=document.getElementById("workArea").innerHTML;
+  const watermark=`<div style="position:fixed;bottom:10px;right:10px;background:rgba(10,25,47,.8);color:#64ffda;padding:6px 12px;font-size:14px;border-radius:6px;z-index:9999;">
+    <a href='https://tedi-company.github.io/Tedi-grop/criação de sites/index.html' style='color:#64ffda;text-decoration:none' target='_blank'>feito com Tedi Group</a>
+  </div>`;
+  const html=`<!DOCTYPE html>
 <html lang="pt-BR">
-<head><meta charset="UTF-8"><title>Site Personalizado</title></head>
-<body>
-  <h1>${titulo}</h1>
-  <p>${texto}</p>
-  <button>${botao}</button>
-</body>
-</html>`;
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Site criado com Tedi Group</title>
+<link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600&display=swap" rel="stylesheet">
+</head><body>${content}${watermark}</body></html>`;
+  download("site-tedi.html",html);
+}
 
-      document.getElementById("codigoHTML").value = htmlFinal.trim();
-    }
-  </script>
+function download(filename,text){
+  const blob=new Blob([text],{type:"text/html"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url;a.download=filename;a.click();
+  URL.revokeObjectURL(url);
+}
+</script>
 </body>
 </html>
