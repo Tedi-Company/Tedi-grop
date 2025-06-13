@@ -1,91 +1,145 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Editor Visual – Tedi Group</title>
-<style>
-  :root{--azul:#112240;--verde:#64ffda}
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:'Segoe UI',sans-serif;background:#f4f7f8;min-height:100vh;display:flex;flex-direction:column}
-  header{background:var(--azul);color:#fff;padding:20px;text-align:center}
-  #controls{display:flex;gap:10px;justify-content:center;background:#e0e0e0;padding:12px;border-bottom:1px solid #ccc}
-  button{background:var(--verde);color:#0a192f;padding:8px 16px;border:none;border-radius:6px;cursor:pointer;font-weight:600}
-  button:hover{background:#52d0c2}
-  #workArea{flex:1;max-width:1000px;margin:25px auto;padding:0 15px;display:flex;flex-direction:column;gap:25px}
-  #workArea section{background:#fff;padding:25px;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,.1)}
-  [contenteditable]{outline:2px dashed transparent}
-  [contenteditable]:focus{outline-color:var(--verde);background:#e8f9ff}
-  /* drag visual cue */
-  #workArea section.dragging{opacity:.4}
-</style>
+  <meta charset="UTF-8" />
+  <title>Editor Visual - Tedi Group</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #0a192f;
+      color: #ffffff;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #112240;
+      padding: 20px;
+      text-align: center;
+      font-size: 24px;
+      color: #64ffda;
+    }
+
+    main {
+      padding: 20px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #64ffda;
+      color: #0a192f;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      margin: 10px 0;
+    }
+
+    .btn:hover {
+      background-color: #52d0c2;
+    }
+
+    .editor-area {
+      border: 2px dashed #64ffda;
+      padding: 20px;
+      margin-top: 20px;
+    }
+
+    .edit-box {
+      position: absolute;
+      background-color: #112240;
+      border: 1px solid #64ffda;
+      padding: 10px;
+      border-radius: 6px;
+      display: none;
+      z-index: 1000;
+    }
+
+    .edit-box input {
+      padding: 5px;
+      font-size: 16px;
+      width: 200px;
+      margin-right: 10px;
+    }
+
+    .edit-box button {
+      padding: 5px 10px;
+      background-color: #64ffda;
+      border: none;
+      cursor: pointer;
+      color: #0a192f;
+      font-weight: bold;
+    }
+
+    footer {
+      background-color: #112240;
+      padding: 10px;
+      text-align: center;
+      font-size: 14px;
+      color: #888;
+      margin-top: 40px;
+    }
+  </style>
 </head>
 <body>
-  <header><h1>Editor Visual de Sites – Tedi Group</h1></header>
+  <header>Editor Visual – Tedi Group</header>
 
-  <div id="controls">
-    <button onclick="loadExample('ecologico')">Exemplo Ecológico</button>
-    <button onclick="loadExample('infantil')">Exemplo Infantil</button>
-    <button onclick="exportHTML()">Exportar HTML</button>
+  <main>
+    <button class="btn" onclick="loadExample('eco')">Carregar modelo ecológico</button>
+    <button class="btn" onclick="loadExample('infantil')">Carregar modelo infantil</button>
+
+    <div class="editor-area" id="editorArea">
+      <h1>Título do Site</h1>
+      <p>Esse é um exemplo de parágrafo que você pode editar em breve.</p>
+      <a class="btn">Clique aqui</a>
+    </div>
+  </main>
+
+  <div class="edit-box" id="editBox">
+    <input type="text" id="editInput" />
+    <button onclick="applyEdit()">Salvar</button>
   </div>
 
-  <div id="workArea"><!-- modelo carregado aparece aqui --></div>
+  <footer>
+    Editor visual - Mais funções em breve
+  </footer>
 
-<script>
-const paths={
-  ecologico:"/Tedi-grop/tedidev/topsorbankda/banco%20de%20dados/linguagem/html/import/ecologico/pagina_inicial_ecologica/index.html",
-  infantil:"/Tedi-grop/tedidev/topsorbankda/banco%20de%20dados/linguagem/html/import/infantil/pagina_infantil1/index.html"
-};
+  <script>
+    let currentTarget = null;
 
-async function loadExample(type){
-  const url=paths[type];
-  if(!url){alert("Exemplo não encontrado");return;}
-  const res=await fetch(url);const text=await res.text();
-  const temp=new DOMParser().parseFromString(text,"text/html");
-  const bodyHTML=temp.body.innerHTML;
-  const area=document.getElementById("workArea");
-  area.innerHTML=bodyHTML;
-  makeEditableAndDraggable(area);
-}
+    document.querySelectorAll('.editor-area').forEach(area => {
+      area.addEventListener('click', function(e) {
+        if (e.target.classList.contains('btn')) {
+          currentTarget = e.target;
+          const box = document.getElementById('editBox');
+          const input = document.getElementById('editInput');
+          input.value = currentTarget.innerText;
+          box.style.display = 'block';
+          box.style.top = (e.pageY + 10) + 'px';
+          box.style.left = (e.pageX + 10) + 'px';
+        }
+      });
+    });
 
-function makeEditableAndDraggable(container){
-  // tornar editáveis títulos, subtítulos e parágrafos
-  container.querySelectorAll("h1,h2,p").forEach(el=>el.setAttribute("contenteditable","true"));
-  // drag‑and‑drop para cada seção direta em workArea
-  container.querySelectorAll("section").forEach(sec=>{
-    sec.draggable=true;
-    sec.addEventListener("dragstart",()=>sec.classList.add("dragging"));
-    sec.addEventListener("dragend",()=>sec.classList.remove("dragging"));
-  });
-  container.addEventListener("dragover",e=>{
-    e.preventDefault();
-    const dragging=document.querySelector(".dragging");
-    const sections=[...container.querySelectorAll("section:not(.dragging)")];
-    const next=sections.find(s=>e.clientY<s.getBoundingClientRect().top+ s.offsetHeight/2);
-    container.insertBefore(dragging,next);
-  });
-}
+    function applyEdit() {
+      const input = document.getElementById('editInput');
+      if (currentTarget) {
+        currentTarget.innerText = input.value;
+      }
+      document.getElementById('editBox').style.display = 'none';
+    }
 
-function exportHTML(){
-  const content=document.getElementById("workArea").innerHTML;
-  const watermark=`<div style="position:fixed;bottom:10px;right:10px;background:rgba(10,25,47,.8);color:#64ffda;padding:6px 12px;font-size:14px;border-radius:6px;z-index:9999;">
-    <a href='https://tedi-company.github.io/Tedi-grop/criação de sites/index.html' style='color:#64ffda;text-decoration:none' target='_blank'>feito com Tedi Group</a>
-  </div>`;
-  const html=`<!DOCTYPE html>
-<html lang="pt-BR">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Site criado com Tedi Group</title>
-<link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600&display=swap" rel="stylesheet">
-</head><body>${content}${watermark}</body></html>`;
-  download("site-tedi.html",html);
-}
-
-function download(filename,text){
-  const blob=new Blob([text],{type:"text/html"});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement("a");
-  a.href=url;a.download=filename;a.click();
-  URL.revokeObjectURL(url);
-}
-</script>
+    function loadExample(type) {
+      const area = document.getElementById('editorArea');
+      if (type === 'eco') {
+        area.innerHTML = '<h1>Bem-vindo ao site ecológico</h1><p>Natureza é tudo.</p><a class="btn">Saiba mais</a>';
+      } else if (type === 'infantil') {
+        area.innerHTML = '<h1>Bem-vindo ao site infantil</h1><p>Diversão garantida!</p><a class="btn">Vamos brincar!</a>';
+      }
+    }
+  </script>
 </body>
 </html>
