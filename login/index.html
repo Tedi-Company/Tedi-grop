@@ -1,73 +1,33 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Login com GitHub - Tedi Group</title>
+  <meta charset="UTF-8" />
+  <title>Login com GitHub - Teste</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 </head>
 <body>
-  <h1>Login com GitHub - Tedi Group</h1>
-
-  <button onclick="loginComGithub()">Entrar com GitHub</button>
-
-  <div id="status"></div>
+  <h1>Login com GitHub - Teste</h1>
+  <button id="btnLogin">Entrar com GitHub</button>
 
   <script>
-async function loginComGithub() {
-  console.log("Função loginComGithub chamada!");
-  const { error } = await supabase.auth.signInWithOAuth({
-    provider: 'github',
-    options: { redirectTo: window.location.href }
-  });
-  if (error) alert('Erro no login: ' + error.message);
-}
-
-    // 🛠️ Substitua com os seus dados do Supabase
     const supabase = supabase.createClient(
-      'https://kpazfnibnczjboakgmzi.supabase.co',     // 🔁 URL do seu projeto Supabase
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtwYXpmbmlibmN6amJvYWtnbXppIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk0ODcwMDQsImV4cCI6MjA2NTA2MzAwNH0.orTQf9Iah9rw4jdtGPgsXd_Wdq21dYsCnGeH6WZT_v4'                        // 🔁 Chave pública (anon key)
+      'https://kpazfnibnczjboakgmzi.supabase.co',   // Substitua aqui
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtwYXpmbmlibmN6amJvYWtnbXppIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk0ODcwMDQsImV4cCI6MjA2NTA2MzAwNH0.orTQf9Iah9rw4jdtGPgsXd_Wdq21dYsCnGeH6WZT_v4'                     // Substitua aqui
     );
 
-    // 🔐 Inicia o login com GitHub
-    async function loginComGithub() {
+    document.getElementById('btnLogin').addEventListener('click', async () => {
+      console.log('Login iniciado');
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'github',
-        options: {
-          redirectTo: window.location.href // Redireciona de volta ao site após login
-        }
+        options: { redirectTo: window.location.href }
       });
+      if (error) alert('Erro: ' + error.message);
+    });
 
-      if (error) {
-        alert('Erro ao logar: ' + error.message);
-      }
-    }
-
-    // 🎉 Verifica se o usuário já está logado e salva no banco
-    supabase.auth.getUser().then(async ({ data, error }) => {
-      const user = data?.user;
-
-      if (user) {
-        // Exibe mensagem de boas-vindas
-        document.getElementById("status").innerText =
-          "🎉 Bem-vindo, " + user.email;
-
-        // Salva os dados na tabela `usuarios`
-        const { error: dbError } = await supabase
-          .from('usuarios')
-          .upsert([
-            {
-              id: user.id,
-              email: user.email,
-              criado_em: new Date().toISOString()
-            }
-          ]);
-
-        if (dbError) {
-          console.error("Erro ao salvar no banco:", dbError.message);
-          alert("Erro ao salvar no banco: " + dbError.message);
-        } else {
-          console.log("Usuário salvo com sucesso!");
-        }
+    // Opcional: verificar usuário após login
+    supabase.auth.getUser().then(({ data }) => {
+      if (data?.user) {
+        alert('Bem-vindo, ' + data.user.email);
       }
     });
   </script>
