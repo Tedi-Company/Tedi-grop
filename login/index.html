@@ -1,128 +1,66 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <title>Login com Supabase</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <title>Login com GitHub - Tedi Group</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-  <style>
-    body {
-      font-family: "Segoe UI", sans-serif;
-      background: linear-gradient(135deg, #2980b9, #6dd5fa);
-      margin: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    .container {
-      background-color: #fff;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-      max-width: 400px;
-      width: 100%;
-    }
-    h2 {
-      text-align: center;
-      color: #333;
-    }
-    input {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-    }
-    button {
-      width: 100%;
-      padding: 12px;
-      margin-top: 10px;
-      background-color: #3498db;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #2980b9;
-    }
-    #mensagem {
-      margin-top: 15px;
-      font-weight: bold;
-      text-align: center;
-    }
-  </style>
 </head>
 <body>
-  <div class="container">
-    <h2>Login com Supabase</h2>
-    <input id="email" type="email" placeholder="E-mail" />
-    <input id="senha" type="password" placeholder="Senha" />
-    <button onclick="logar()">Entrar</button>
-    <button onclick="cadastrar()">Cadastrar</button>
-    <div id="mensagem"></div>
-  </div>
+  <h1>Login com GitHub - Tedi Group</h1>
+
+  <button onclick="loginComGithub()">Entrar com GitHub</button>
+
+  <div id="status"></div>
 
   <script>
-    // 🔐 Substitua com seus dados reais:
-    const SUPABASE_URL = 'https://kpazfnibnczjboakgmzi.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtwYXpmbmlibmN6amJvYWtnbXppIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk0ODcwMDQsImV4cCI6MjA2NTA2MzAwNH0.orTQf9Iah9rw4jdtGPgsXd_Wdq21dYsCnGeH6WZT_v4';
+    // 🛠️ Substitua com os seus dados do Supabase
+    const supabase = supabase.createClient(
+      'https://kpazfnibnczjboakgmzi.supabase.co',     // 🔁 URL do seu projeto Supabase
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtwYXpmbmlibmN6amJvYWtnbXppIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk0ODcwMDQsImV4cCI6MjA2NTA2MzAwNH0.orTQf9Iah9rw4jdtGPgsXd_Wdq21dYsCnGeH6WZT_v4'                        // 🔁 Chave pública (anon key)
+    );
 
-    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    const mensagem = document.getElementById('mensagem');
-
-    async function logar() {
-      const email = document.getElementById('email').value;
-      const senha = document.getElementById('senha').value;
-      mensagem.style.color = 'red';
-      mensagem.textContent = '';
-
-      if (!email || !senha) {
-        mensagem.textContent = 'Preencha todos os campos.';
-        return;
-      }
-
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password: senha
+    // 🔐 Inicia o login com GitHub
+    async function loginComGithub() {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'github',
+        options: {
+          redirectTo: window.location.href // Redireciona de volta ao site após login
+        }
       });
 
       if (error) {
-        mensagem.textContent = 'Erro: ' + error.message;
-      } else {
-        mensagem.style.color = 'green';
-        mensagem.textContent = 'Login bem-sucedido! Redirecionando...';
-        setTimeout(() => {
-          window.location.href = 'dashboard.html'; // Redireciona
-        }, 1500);
+        alert('Erro ao logar: ' + error.message);
       }
     }
 
-    async function cadastrar() {
-      const email = document.getElementById('email').value;
-      const senha = document.getElementById('senha').value;
-      mensagem.style.color = 'red';
-      mensagem.textContent = '';
+    // 🎉 Verifica se o usuário já está logado e salva no banco
+    supabase.auth.getUser().then(async ({ data, error }) => {
+      const user = data?.user;
 
-      if (!email || !senha) {
-        mensagem.textContent = 'Preencha todos os campos.';
-        return;
+      if (user) {
+        // Exibe mensagem de boas-vindas
+        document.getElementById("status").innerText =
+          "🎉 Bem-vindo, " + user.email;
+
+        // Salva os dados na tabela `usuarios`
+        const { error: dbError } = await supabase
+          .from('usuarios')
+          .upsert([
+            {
+              id: user.id,
+              email: user.email,
+              criado_em: new Date().toISOString()
+            }
+          ]);
+
+        if (dbError) {
+          console.error("Erro ao salvar no banco:", dbError.message);
+          alert("Erro ao salvar no banco: " + dbError.message);
+        } else {
+          console.log("Usuário salvo com sucesso!");
+        }
       }
-
-      const { error } = await supabase.auth.signUp({
-        email,
-        password: senha
-      });
-
-      if (error) {
-        mensagem.textContent = 'Erro: ' + error.message;
-      } else {
-        mensagem.style.color = 'green';
-        mensagem.textContent = 'Cadastro feito! Verifique seu e-mail.';
-      }
-    }
+    });
   </script>
 </body>
 </html>
