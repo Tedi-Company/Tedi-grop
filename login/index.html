@@ -13,6 +13,15 @@
   <div id="status"></div>
 
   <script>
+async function loginComGithub() {
+  console.log("Função loginComGithub chamada!");
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: 'github',
+    options: { redirectTo: window.location.href }
+  });
+  if (error) alert('Erro no login: ' + error.message);
+}
+
     // 🛠️ Substitua com os seus dados do Supabase
     const supabase = supabase.createClient(
       'https://kpazfnibnczjboakgmzi.supabase.co',     // 🔁 URL do seu projeto Supabase
