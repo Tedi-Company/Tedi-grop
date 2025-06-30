@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>navegador tedi</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #0a192f;
+      color: #ffffff;
+    }
+
+    header {
+      background-color: #112240;
+      padding: 15px 30px;
+      color: white;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #64ffda;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav ul li a {
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 16px;
+      transition: color 0.3s;
+    }
+
+    nav ul li a:hover {
+      color: #64ffda;
+    }
+
+    main {
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #64ffda;
+      font-size: 36px;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 18px;
+      max-width: 800px;
+      margin: 0 auto 40px;
+      color: #cfd8dc;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 25px;
+      background-color: #64ffda;
+      color: #0a192f;
+      font-weight: bold;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: background-color 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #52d0c2;
+    }
+
+    .btn-secondary {
+      background-color: #445566;
+      color: #ffffff;
+      margin-top: 15px;
+      font-size: 14px;
+      padding: 8px 16px;
+    }
+
+    .btn-secondary:hover {
+      background-color: #667788;
+    }
+
+    .educacao-section {
+      background-color: #112240;
+      padding: 60px 20px;
+    }
+
+    .educacao-section h2 {
+      font-size: 32px;
+      color: #64ffda;
+      margin-bottom: 20px;
+    }
+
+    .educacao-section p {
+      font-size: 18px;
+      max-width: 800px;
+      margin: auto;
+      margin-bottom: 30px;
+      color: #cfd8dc;
+    }
+
+    .educacao-section .btn {
+      background-color: #64ffda;
+      color: #0a192f;
+      padding: 10px 20px;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 6px;
+    }
+
+    .educacao-section .btn:hover {
+      background-color: #52d0c2;
+    }
+
+    footer {
+      background-color: #112240;
+      text-align: center;
+      padding: 20px;
+      color: #888;
+    }
+
+    /* Estilo da barra de pesquisa */
+    .search-form {
+      margin-bottom: 40px;
+    }
+
+    .search-form input {
+      padding: 12px;
+      width: 60%;
+      border-radius: 6px;
+      border: none;
+      font-size: 16px;
+    }
+
+    .search-form button {
+      padding: 12px 20px;
+      margin-left: 10px;
+      background-color: #64ffda;
+      color: #0a192f;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .search-form button:hover {
+      background-color: #52d0c2;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="logo">navegador tedi--tedi group</div>
+      <ul>
+        <li><a href="https://tedi-group.com/index.html">Início</a></li>
+        <li><a href="/Tedi-grop/jogos/index.html">Jogos</a></li>
+        <li><a href="/Tedi-grop/blog/index.html">Blog</a></li>
+        <li><a href="/Tedi-grop/educacao/index.html">Educação</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <form onsubmit="pesquisarDuck(event)" class="search-form">
+      <input type="text" id="pesquisa" placeholder="Pesquisar no DuckDuckGo">
+      <button type="submit">🔍 Pesquisar</button>
+    </form>
+
+    <h1>Seja bem vindo(a) ao navegador tedi</h1>
+    <p>Oferecemos jogos, conteúdos educacionais e soluções inovadoras para todos os públicos que usam nossos serviços e nosso navegador.</p>
+  </main>
+
+  <footer>
+    &copy; 2025 Tedi Group. Todos os direitos reservados.
+  </footer>
+
+  <script>
+    function pesquisarDuck(event) {
+      event.preventDefault(); // impede o recarregamento
+      const termo = document.getElementById("pesquisa").value;
+      if (termo.trim() !== "") {
+        const url = "https://duckduckgo.com/?q=" + encodeURIComponent(termo);
+        window.location.href = url;
+      }
+    }
+  </script>
+</body>
+</html>
