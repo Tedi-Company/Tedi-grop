@@ -127,38 +127,6 @@
       background-color: #52d0c2;
     }
 
-    .educacao-section {
-      background-color: #112240;
-      padding: 60px 20px;
-    }
-
-    .educacao-section h2 {
-      font-size: 32px;
-      color: #64ffda;
-      margin-bottom: 20px;
-    }
-
-    .educacao-section p {
-      font-size: 18px;
-      max-width: 800px;
-      margin: auto;
-      margin-bottom: 30px;
-      color: #cfd8dc;
-    }
-
-    .educacao-section .btn {
-      background-color: #64ffda;
-      color: #0a192f;
-      padding: 10px 20px;
-      text-decoration: none;
-      font-weight: bold;
-      border-radius: 6px;
-    }
-
-    .educacao-section .btn:hover {
-      background-color: #52d0c2;
-    }
-
     .ia-section {
       background-color: #112240;
       padding: 60px 20px;
@@ -187,7 +155,7 @@
       border-radius: 6px;
     }
 
-    .ia .btn:hover {
+    .ia-section .btn:hover {
       background-color: #52d0c2;
     }
 
@@ -219,11 +187,10 @@
       border-radius: 6px;
     }
 
-    .navtedi .btn:hover {
+    .navtedi-section .btn:hover {
       background-color: #52d0c2;
     }
 
-     
     footer {
       background-color: #112240;
       text-align: center;
@@ -241,6 +208,8 @@
         <li><a href="/Tedi-grop/jogos/index.html">Jogos</a></li>
         <li><a href="/Tedi-grop/blog/index.html">Blog</a></li>
         <li><a href="/Tedi-grop/educacao/index.html">Educação</a></li>
+        <li><a href="https://login-e-cadastro.onrender.com/login" id="login-btn">Login</a></li>
+        <li><a href="https://login-e-cadastro.onrender.com/register">Cadastrar</a></li>
       </ul>
     </nav>
   </header>
@@ -273,5 +242,28 @@
   <footer>
     &copy; 2025 Tedi Group. Todos os direitos reservados.
   </footer>
+
+  <script>
+    fetch("https://login-e-cadastro.onrender.com/api/status", {
+      credentials: "include"
+    })
+    .then(response => response.json())
+    .then(data => {
+      if(data.logged_in) {
+        const loginBtn = document.getElementById("login-btn");
+        if(loginBtn) {
+          if(data.profile_pic) {
+            loginBtn.outerHTML = `<img src="${data.profile_pic}" alt="Perfil" style="width:40px; height:40px; border-radius:50%; cursor:pointer;" title="Perfil de ${data.username}">`;
+          } else {
+            const letra = data.username.charAt(0).toUpperCase();
+            loginBtn.outerHTML = `<div style="width:40px; height:40px; border-radius:50%; background:#64ffda; color:#0a192f; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:20px; cursor:pointer;" title="Perfil de ${data.username}">${letra}</div>`;
+          }
+        }
+      }
+    })
+    .catch(err => {
+      console.log("Erro ao checar login:", err);
+    });
+  </script>
 </body>
 </html>
