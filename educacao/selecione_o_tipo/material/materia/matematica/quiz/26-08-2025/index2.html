@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Quiz de Matemática - 4º Ano</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { font-family: Arial, sans-serif; background: #f0f8ff; padding: 20px; }
+  h1 { color: #2e8b57; text-align:center; }
+  .pergunta { margin-bottom: 30px; padding: 15px; background: #e0f7fa; border-radius: 8px; }
+  .resposta { margin: 10px 0; }
+  button { padding: 5px 15px; margin: 5px; border-radius: 5px; border: none; background: #2e8b57; color: white; cursor: pointer; }
+  button:hover { background: #3cb371; }
+  canvas { border: 1px solid #000; background: #fff; display: block; margin-top: 10px; max-width: 100%; height: auto; }
+  .feedback { margin-top: 10px; font-weight: bold; }
+</style>
+</head>
+<body>
+
+<h1>Quiz de Matemática – Operações Básicas</h1>
+
+<div style="margin-bottom: 20px; text-align:center;">
+  <button onclick="exportarQuiz()">Exportar .teedu</button>
+  <input type="file" id="importarArquivo" style="display:none" onchange="importarQuiz(event)">
+  <button onclick="document.getElementById('importarArquivo').click()">Importar .teedu</button>
+  <button onclick="window.print()">Imprimir</button>
+</div>
+
+<!-- PERGUNTAS -->
+<div class="pergunta">
+  <p><b>1. Quanto é 23 + 17?</b></p>
+  <div class="resposta">
+    <button onclick="checar(this, 40)">30</button>
+    <button onclick="checar(this, 40)">40</button>
+    <button onclick="checar(this, 40)">50</button>
+    <button onclick="checar(this, 40)">60</button>
+  </div>
+  <canvas width="400" height="150"></canvas>
+  <div class="feedback"></div>
+</div>
+
+<div class="pergunta">
+  <p><b>2. Quanto é 85 − 29?</b></p>
+  <div class="resposta">
+    <button onclick="checar(this, 56)">56</button>
+    <button onclick="checar(this, 56)">54</button>
+    <button onclick="checar(this, 56)">66</button>
+    <button onclick="checar(this, 56)">64</button>
+  </div>
+  <canvas width="400" height="150"></canvas>
+  <div class="feedback"></div>
+</div>
+
+<div class="pergunta">
+  <p><b>3. Multiplicação: 8 × 7 = ?</b></p>
+  <div class="resposta">
+    <button onclick="checar(this, 56)">54</button>
+    <button onclick="checar(this, 56)">56</button>
+    <button onclick="checar(this, 56)">58</button>
+    <button onclick="checar(this, 56)">64</button>
+  </div>
+  <canvas width="400" height="150"></canvas>
+  <div class="feedback"></div>
+</div>
+
+<div class="pergunta">
+  <p><b>4. Divisão: 72 ÷ 8 = ?</b></p>
+  <div class="resposta">
+    <button onclick="checar(this, 9)">7</button>
+    <button onclick="checar(this, 9)">8</button>
+    <button onclick="checar(this, 9)">9</button>
+    <button onclick="checar(this, 9)">10</button>
+  </div>
+  <canvas width="400" height="150"></canvas>
+  <div class="feedback"></div>
+</div>
+
+<script>
+function checar(botao, certo) {
+  let feedback = botao.parentElement.nextElementSibling.nextElementSibling;
+  const botoes = botao.parentElement.querySelectorAll('button');
+  botoes.forEach(b => { 
+    b.dataset.selecionado = 'false';
+    b.style.background = '#2e8b57'; 
+    b.style.color = 'white';
+  });
+  botao.dataset.selecionado = 'true';
+
+  if (parseInt(botao.textContent) === certo || botao.textContent.toLowerCase() === "verdadeiro") {
+    feedback.textContent = "🎉 Parabéns!";
+    feedback.style.color = "green";
+  } else {
+    feedback.textContent = "❌ Tente de novo!";
+    feedback.style.color = "red";
+  }
+  botao.style.background = '#3cb371';
+  botao.style.color = 'white';
+}
+
+// Desenho com mouse + toque
+document.querySelectorAll('canvas').forEach(canvas => {
+  const ctx = canvas.getContext('2d');
+  let desenhando = false;
+
+  function desenhar(x, y) {
+    ctx.lineWidth = 2;
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = 'black';
+    ctx.lineTo(x, y);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+  }
+
+  canvas.addEventListener('mousedown', e => {
+    desenhando = true;
+    desenhar(e.offsetX, e.offsetY);
+  });
+  canvas.addEventListener('mouseup', () => { desenhando = false; ctx.beginPath(); });
+  canvas.addEventListener('mousemove', e => {
+    if (desenhando) desenhar(e.offsetX, e.offsetY);
+  });
+
+  // Toque no celular
+  canvas.addEventListener('touchstart', e => {
+    desenhando = true;
+    const rect = canvas.getBoundingClientRect();
+    desenhar(e.touches[0].clientX - rect.left, e.touches[0].clientY - rect.top);
+    e.preventDefault();
+  });
+  canvas.addEventListener('touchend', () => { desenhando = false; ctx.beginPath(); });
+  canvas.addEventListener('touchmove', e => {
+    if (!desenhando) return;
+    const rect = canvas.getBoundingClientRect();
+    desenhar(e.touches[0].clientX - rect.left, e.touches[0].clientY - rect.top);
+    e.preventDefault();
+  });
+});
+
+// EXPORTAR
+function exportarQuiz() {
+  const perguntas = document.querySelectorAll('.pergunta');
+  let dados = [];
+  perguntas.forEach(p => {
+    const botoes = p.querySelectorAll('.resposta button');
+    let selecionado = null;
+    botoes.forEach(b => { if (b.dataset.selecionado === 'true') selecionado = b.textContent; });
+    const canvas = p.querySelector('canvas');
+    const imagem = canvas.toDataURL();
+    dados.push({selecionado, imagem});
+  });
+  const blob = new Blob([JSON.stringify(dados)], {type: 'application/json'});
+  const link = document.createElement('a');
+  link.download = 'quiz.teedu';
+  link.href = URL.createObjectURL(blob);
+  link.click();
+}
+
+// IMPORTAR
+function importarQuiz(event) {
+  const arquivo = event.target.files[0];
+  if (!arquivo) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const dados = JSON.parse(e.target.result);
+    const perguntas = document.querySelectorAll('.pergunta');
+    perguntas.forEach((p, i) => {
+      const botoes = p.querySelectorAll('.resposta button');
+      botoes.forEach(b => { 
+        b.dataset.selecionado = 'false';
+        b.style.background = '#2e8b57'; 
+        b.style.color = 'white';
+      });
+      if (dados[i].selecionado) {
+        botoes.forEach(b => { 
+          if (b.textContent === dados[i].selecionado) {
+            b.dataset.selecionado = 'true';
+            b.style.background = '#3cb371';
+            b.style.color='white';
+          }
+        });
+      }
+      const canvas = p.querySelector('canvas');
+      const ctx = canvas.getContext('2d');
+      const img = new Image();
+      img.onload = function() { ctx.clearRect(0,0,canvas.width,canvas.height); ctx.drawImage(img,0,0); }
+      img.src = dados[i].imagem;
+    });
+  }
+  reader.readAsText(arquivo);
+}
+</script>
+
+</body>
+</html>
