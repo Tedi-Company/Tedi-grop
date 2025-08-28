@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Login com Supabase</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+</head>
+<body>
+  <h1>Login</h1>
+  <input id="email" type="email" placeholder="E-mail">
+  <input id="senha" type="password" placeholder="Senha">
+  <button onclick="logar()">Entrar</button>
+  <button onclick="cadastrar()">Cadastrar</button>
+
+  <script>
+    const SUPABASE_URL = 'https://SEU_PROJETO.supabase.co';
+    const SUPABASE_ANON_KEY = 'sua_chave_publica_aqui';
+
+    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    async function logar() {
+      const email = document.getElementById('email').value;
+      const senha = document.getElementById('senha').value;
+      const { error, user } = await supabase.auth.signInWithPassword({
+        email, password: senha
+      });
+      if (error) {
+        alert('Erro ao logar: ' + error.message);
+      } else {
+        alert('Logado com sucesso!');
+      }
+    }
+
+    async function cadastrar() {
+      const email = document.getElementById('email').value;
+      const senha = document.getElementById('senha').value;
+      const { error, user } = await supabase.auth.signUp({
+        email, password: senha
+      });
+      if (error) {
+        alert('Erro ao cadastrar: ' + error.message);
+      } else {
+        alert('Cadastro realizado! Verifique seu e-mail.');
+      }
+    }
+  </script>
+</body>
+</html>

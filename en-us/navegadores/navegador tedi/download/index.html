@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Download - Navegador Tedi</title>
+  <style>
+    body {
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    h1 {
+      font-size: 3em;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1.2em;
+      margin-bottom: 30px;
+    }
+
+    .download-button {
+      display: inline-block;
+      padding: 16px 32px;
+      font-size: 18px;
+      background-color: #00c853;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .download-button:hover {
+      background-color: #009624;
+    }
+
+    .info {
+      margin-top: 40px;
+      font-size: 0.9em;
+      color: #ccc;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 10;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.7);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: #1e1e1e;
+      padding: 30px;
+      border-radius: 10px;
+      text-align: center;
+      width: 300px;
+    }
+
+    .modal-content h2 {
+      margin-bottom: 20px;
+    }
+
+    .option-button {
+      display: block;
+      margin: 10px auto;
+      padding: 10px 20px;
+      background-color: #1976d2;
+      color: white;
+      text-decoration: none;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .option-button:hover {
+      background-color: #125aa0;
+    }
+
+    .close {
+      margin-top: 20px;
+      background: none;
+      border: none;
+      color: #bbb;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .close:hover {
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Download do Navegador Tedi</h1>
+  <p>Baixe a versão desejada do nosso navegador 100% gratuito.</p>
+
+  <button class="download-button" onclick="abrirModalVersao()">⬇️ Baixar Agora</button>
+
+  <div class="info">
+    ⚠️ Você será redirecionado ao site do MEGA após escolher a versão e formato.<br>
+    Clique em <strong>“Baixar pelo navegador”</strong> quando a página abrir.<br><br>
+    © Tedi Group
+  </div>
+
+  <!-- Modal 1: Versão -->
+  <div class="modal" id="modalVersao">
+    <div class="modal-content">
+      <h2>Escolha a versão</h2>
+      <button class="option-button" onclick="escolherVersao('1.0')">Versão 1.0</button>
+      <button class="option-button" onclick="escolherVersao('1.0.1')">Versão 1.0.1</button>
+      <button class="option-button" onclick="escolherVersao('1.0.2')">Versão 1.0.2</button>
+      <button class="close" onclick="fecharTodos()">Cancelar</button>
+    </div>
+  </div>
+
+  <!-- Modal 2: Formato -->
+  <div class="modal" id="modalFormato">
+    <div class="modal-content">
+      <h2>Escolha o formato</h2>
+      <button class="option-button" onclick="baixar('msi')">MSI</button>
+      <button class="option-button" onclick="baixar('zip')">ZIP</button>
+      <button class="close" onclick="fecharTodos()">Cancelar</button>
+    </div>
+  </div>
+
+  <script>
+    let versaoSelecionada = null;
+
+    function abrirModalVersao() {
+      document.getElementById('modalVersao').style.display = 'flex';
+    }
+
+    function escolherVersao(versao) {
+      versaoSelecionada = versao;
+      document.getElementById('modalVersao').style.display = 'none';
+      document.getElementById('modalFormato').style.display = 'flex';
+    }
+
+    function fecharTodos() {
+      document.getElementById('modalVersao').style.display = 'none';
+      document.getElementById('modalFormato').style.display = 'none';
+    }
+
+    function baixar(formato) {
+      const links = {
+        '1.0': {
+          msi: 'https://mega.nz/file/XdUQlRbR#ms5OPA1GCrfEJOhiSSEjevPXctH7OVO9cMcjyrwyJqI',
+          zip: 'https://mega.nz/file/SEU_LINK_1_0_ZIP#CHAVE'
+        },
+        '1.0.1': {
+          msi: 'https://mega.nz/file/SAEWgDBQ#CjyLRhvEo2G6nvV-A3jIjr8qXveE50iv8rLTxqRWqZ4',
+          zip: 'https://mega.nz/file/3dlUkTqb#JVsV8WXBqNQar6jgP03jGu1MjiiO4IWzIeTyLdcEJks'
+        },
+        '1.0.2': {
+          msi: 'https://mega.nz/file/CE9XFADR#fgSv63li_P6qeCnvL-NrwDV_Kqcq2BP5OgpW_uHwMew',
+          zip: 'https://mega.nz/file/3VdTjLjb#dy7Y_RojByNNObjRlb3s7mhmv-AstSGfry_9TzBITA4'
+        }
+      };
+
+      const url = links[versaoSelecionada][formato];
+      window.open(url, '_blank');
+      fecharTodos();
+    }
+  </script>
+
+</body>
+</html>

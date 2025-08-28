@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .painel {
+      background-color: white;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    h1 {
+      color: #2c3e50;
+    }
+    p {
+      font-size: 18px;
+      margin: 10px 0;
+    }
+    button {
+      padding: 12px 24px;
+      background-color: #e74c3c;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    button:hover {
+      background-color: #c0392b;
+    }
+  </style>
+</head>
+<body>
+  <div class="painel">
+    <h1>Bem-vindo ao Painel!</h1>
+    <p id="user-email">Carregando...</p>
+    <button onclick="logout()">Sair</button>
+  </div>
+
+  <script>
+    // 🔐 Use os mesmos dados do Supabase aqui também:
+    const SUPABASE_URL = 'https://kpazfnibnczjboakgmzi.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtwYXpmbmlibmN6amJvYWtnbXppIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk0ODcwMDQsImV4cCI6MjA2NTA2MzAwNH0.orTQf9Iah9rw4jdtGPgsXd_Wdq21dYsCnGeH6WZT_v4';
+    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    async function verificarUsuario() {
+      const { data: { user }, error } = await supabase.auth.getUser();
+
+      if (error || !user) {
+        // Usuário não autenticado, redireciona
+        window.location.href = 'index.html';
+      } else {
+        document.getElementById('user-email').textContent = `Logado como: ${user.email}`;
+      }
+    }
+
+    async function logout() {
+      await supabase.auth.signOut();
+      window.location.href = 'index.html';
+    }
+
+    verificarUsuario();
+  </script>
+</body>
+</html>

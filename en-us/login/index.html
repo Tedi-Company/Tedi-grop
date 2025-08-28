@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login com GitHub - Teste</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+</head>
+<body>
+  <h1>Login com GitHub - Teste</h1>
+  <button id="btnLogin">Entrar com GitHub</button>
+
+  <script>
+    const supabase = supabase.createClient(
+      'https://kpazfnibnczjboakgmzi.supabase.co',   // Substitua aqui
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtwYXpmbmlibmN6amJvYWtnbXppIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk0ODcwMDQsImV4cCI6MjA2NTA2MzAwNH0.orTQf9Iah9rw4jdtGPgsXd_Wdq21dYsCnGeH6WZT_v4'                     // Substitua aqui
+    );
+
+    document.getElementById('btnLogin').addEventListener('click', async () => {
+      console.log('Login iniciado');
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'github',
+        options: { redirectTo: window.location.href }
+      });
+      if (error) alert('Erro: ' + error.message);
+    });
+
+    // Opcional: verificar usuário após login
+    supabase.auth.getUser().then(({ data }) => {
+      if (data?.user) {
+        alert('Bem-vindo, ' + data.user.email);
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Serviços de Pintura – Pintor Profissional</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f7f7f7;
+      color: #333;
+    }
+
+    header {
+      background-color: #3e4eb8;
+      padding: 20px;
+      color: white;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 32px;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      background-color: #2c3894;
+      padding: 10px 0;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    section {
+      padding: 50px 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .sobre h2, .servicos h2, .portfolio h2, .contato h2 {
+      color: #3e4eb8;
+    }
+
+    .servicos ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .servicos ul li {
+      margin: 10px 0;
+      background-color: #e3e8ff;
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    .portfolio img {
+      width: 100%;
+      max-width: 400px;
+      margin: 10px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px #ccc;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #2c3894;
+      color: white;
+      position: relative;
+    }
+
+    .marca-dagua {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      background: rgba(255,255,255,0.9);
+      color: #333;
+      padding: 6px 12px;
+      font-size: 12px;
+      border-radius: 4px;
+      font-weight: bold;
+      z-index: 9999;
+    }
+
+    .marca-dagua a {
+      color: #3e4eb8;
+      text-decoration: none;
+    }
+
+    .marca-dagua a:hover {
+      text-decoration: underline;
+    }
+
+    @media(max-width: 600px) {
+      nav {
+        flex-direction: column;
+      }
+
+      .portfolio img {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Pintor Profissional</h1>
+    <p>Transformando espaços com cor e qualidade</p>
+  </header>
+
+  <nav>
+    <a href="#sobre">Sobre</a>
+    <a href="#servicos">Serviços</a>
+    <a href="#portfolio">Portfólio</a>
+    <a href="#contato">Contato</a>
+  </nav>
+
+  <section id="sobre" class="sobre">
+    <h2>Sobre Mim</h2>
+    <p>Sou um pintor com mais de 10 anos de experiência, especializado em pintura residencial, comercial e artística. Minha missão é entregar um serviço de qualidade que transforme o ambiente e supere expectativas.</p>
+  </section>
+
+  <section id="servicos" class="servicos">
+    <h2>Serviços</h2>
+    <ul>
+      <li>Pintura interna e externa</li>
+      <li>Texturização e efeitos decorativos</li>
+      <li>Pintura de móveis e objetos</li>
+      <li>Reparos e preparação de superfície</li>
+    </ul>
+  </section>
+
+  <section id="portfolio" class="portfolio">
+    <h2>Portfólio</h2>
+    <img src="https://via.placeholder.com/400x250?text=Pintura+1" alt="Trabalho 1" />
+    <img src="https://via.placeholder.com/400x250?text=Pintura+2" alt="Trabalho 2" />
+  </section>
+
+  <section id="contato" class="contato">
+    <h2>Contato</h2>
+    <p>Entre em contato pelo WhatsApp <strong>(11) 99999-9999</strong> ou envie um e-mail para <strong>pintor@email.com</strong>.</p>
+  </section>
+
+  <footer>
+    &copy; 2025 Pintor Profissional – Todos os direitos reservados
+  </footer>
+
+  <div class="marca-dagua">
+    feito com <a href="https://tedi-company.github.io/Tedi-grop/criação de sites/index.html" target="_blank">Tedi Group</a>
+  </div>
+
+</body>
+</html>

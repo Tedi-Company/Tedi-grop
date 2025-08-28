@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sistema Operacional HTML</title>
+  <style>
+    body {
+      margin: 0; 
+      background-color: #1e1e2e; 
+      color: white; 
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+      user-select: none;
+    }
+    #desktop {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background-color: inherit;
+    }
+    .window {
+      position: absolute;
+      background-color: #2e2e3e;
+      border: 1px solid #444;
+      border-radius: 5px;
+      width: 400px;
+      height: 300px;
+      box-shadow: 0 0 10px black;
+      display: flex;
+      flex-direction: column;
+      z-index: 0;
+    }
+    .title-bar {
+      background: #444;
+      padding: 5px 10px;
+      cursor: move;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+    }
+    .title-bar span {
+      font-weight: bold;
+    }
+    .close-btn {
+      background: #ff5c5c;
+      border: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-weight: bold;
+      color: black;
+      text-align: center;
+      line-height: 18px;
+    }
+    .window-content {
+      flex: 1;
+      padding: 10px;
+      overflow: auto;
+      background-color: #222233;
+    }
+    #taskbar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 40px;
+      width: 100vw;
+      background-color: #33334d;
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      box-sizing: border-box;
+      color: white;
+      user-select: none;
+      font-weight: bold;
+    }
+    #startBtn {
+      background-color: #555577;
+      border: none;
+      padding: 6px 12px;
+      margin-right: 10px;
+      cursor: pointer;
+      border-radius: 4px;
+      color: white;
+      font-weight: bold;
+    }
+    #startMenu {
+      position: absolute;
+      bottom: 40px;
+      left: 10px;
+      width: 180px;
+      background-color: #444466;
+      border-radius: 5px;
+      display: none;
+      flex-direction: column;
+      padding: 5px;
+      user-select: none;
+      box-shadow: 0 0 10px black;
+      z-index: 10000;
+    }
+    #startMenu button {
+      background: none;
+      border: none;
+      padding: 10px;
+      text-align: left;
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 4px;
+      transition: background-color 0.2s;
+    }
+    #startMenu button:hover {
+      background-color: #666699;
+    }
+    /* Calculadora styles */
+    .calc-container {
+      width: 220px;
+      margin: auto;
+      user-select: none;
+    }
+    .calc-display {
+      width: 100%;
+      height: 40px;
+      font-size: 18px;
+      text-align: right;
+      padding: 5px;
+      border: 1px solid #ccc;
+      margin-bottom: 8px;
+      box-sizing: border-box;
+      background-color: white;
+      color: black;
+      border-radius: 4px;
+    }
+    .calc-buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+    }
+    .calc-buttons button {
+      font-size: 18px;
+      padding: 10px;
+      cursor: pointer;
+      background-color: #282c34;
+      border: none;
+      color: white;
+      border-radius: 4px;
+      transition: background-color 0.2s;
+    }
+    .calc-buttons button:hover {
+      background-color: #3a3f54;
+    }
+  </style>
+</head>
+<body>
+  <div id="desktop"></div>
+
+  <div id="taskbar">
+    <button id="startBtn">Iniciar</button>
+    <div id="clock" style="margin-left:auto; font-family: monospace;">00:00:00</div>
+  </div>
+
+  <div id="startMenu">
+    <button onclick="createTextEditor()">Editor de Texto</button>
+    <button onclick="createBrowserWindow()">Navegador</button>
+    <button onclick="createSnakeGame()">Jogo Snake</button>
+    <button onclick="createClickGame()">Jogo de Clique</button>
+    <button onclick="createCalculator()">Calculadora</button>
+    <button onclick="createSettings()">Configurações</button>
+  </div>
+
+  <script>
+    const desktop = document.getElementById("desktop");
+    const startBtn = document.getElementById("startBtn");
+    const startMenu = document.getElementById("startMenu");
+    let zIndexCounter = 1;
+    let clockFormat = 24; // 24h ou 12h
+
+    // Alterna menu iniciar
+    startBtn.onclick = () => {
+      startMenu.style.display = startMenu.style.display === "flex" ? "none" : "flex";
+    };
+
+    // Relógio
+    function updateClock() {
+      const now = new Date();
+      let hours = now.getHours();
+      let minutes = now.getMinutes();
+      let seconds = now.getSeconds();
+      let ampm = "";
+      if (clockFormat === 12) {
+        ampm = hours >= 12 ? " PM" : " AM";
+        hours = hours % 12 || 12;
+      }
+      document.getElementById("clock").textContent =
+        `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}${ampm}`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Cria janelas
+    function createWindow(title, content) {
+      const win = document.createElement("div");
+      win.className = "window";
+      win.style.top = "50px";
+      win.style.left = "50px";
+      win.style.zIndex = ++zIndexCounter;
+
+      win.innerHTML = `
+        <div class="title-bar">
+          <span>${title}</span>
+          <button class="close-btn">&times;</button>
+        </div>
+        <div class="window-content">${content}</div>
+      `;
+      desktop.appendChild(win);
+
+      // Arrastar janela
+      const bar = win.querySelector(".title-bar");
+      const closeBtn = win.querySelector(".close-btn");
+
+      closeBtn.onclick = () => win.remove();
+
+      let isDragging = false, offsetX, offsetY;
+
+      bar.onmousedown = (e) => {
+        isDragging = true;
+        offsetX = e.clientX - win.offsetLeft;
+        offsetY = e.clientY - win.offsetTop;
+        document.body.style.userSelect = "none";
+        win.style.zIndex = ++zIndexCounter;
+      };
+
+      document.onmouseup = () => {
+        isDragging = false;
+        document.body.style.userSelect = "auto";
+      };
+
+      document.onmousemove = (e) => {
+        if (isDragging) {
+          win.style.left = (e.clientX - offsetX) + "px";
+          win.style.top = (e.clientY - offsetY) + "px";
+        }
+      };
+
+      return win;
+    }
+
+    // Editor de Texto
+    function createTextEditor() {
+      const content = `<textarea placeholder='Digite seu texto aqui...' style="width: 100%; height: 100%; resize:none; background:#111; color:#eee; border:none; outline:none; padding:10px; font-family: monospace;"></textarea>`;
+      createWindow("Editor de Texto", content);
+    }
+
+    // Navegador
+    function createBrowserWindow() {
+      const content = `
+        <input type="text" id="urlInput" placeholder="https://www.google.com" style="width: 100%; padding: 6px;" 
+          onkeydown="if(event.key==='Enter') this.nextElementSibling.src = this.value" />
+        <iframe src="https://www.google.com" style="width: 100%; height: 90%; border:none;"></iframe>
+      `;
+      createWindow("Navegador", content);
+    }
+
+    // Jogo de Clique
+    function createClickGame() {
+      const content = `
+        <div style="text-align:center; user-select:none;">
+          <p>Cliques: <span id="clickCount">0</span></p>
+          <button onclick="document.getElementById('clickCount').textContent = parseInt(document.getElementById('clickCount').textContent) + 1">Clique!</button>
+        </div>
+      `;
+      createWindow("Jogo de Clique", content);
+    }
+
+    // Snake Game
+    function createSnakeGame() {
+      const content = `
+        <canvas id="snakeCanvas" width="300" height="300" style="background:#000; display:block; margin:auto;"></canvas>
+        <script>
+          const canvas = document.getElementById('snakeCanvas');
+          const ctx = canvas.getContext('2d');
+          const grid = 15;
+          let count = 0;
+          let snake = { x: 150, y: 150, cells: [], maxCells: 4, dx: grid, dy: 0 };
+          let apple = { x: 150, y: 150 };
+          function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min)) + min;
+          }
+          function loop() {
+            requestAnimationFrame(loop);
+            if (++count < 4) return;
+            count = 0;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            snake.x += snake.dx;
+            snake.y += snake.dy;
+            if (snake.x < 0) snake.x = canvas.width - grid;
+            else if (snake.x >= canvas.width) snake.x = 0;
+            if (snake.y < 0) snake.y = canvas.height - grid;
+            else if (snake.y >= canvas.height) snake.y = 0;
+            snake.cells.unshift({ x: snake.x, y: snake.y });
+            if (snake.cells.length > snake.maxCells) snake.cells.pop();
+            ctx.fillStyle = 'red';
+            ctx.fillRect(apple.x, apple.y, grid - 1, grid - 1);
+            ctx.fillStyle = 'lime';
+            snake.cells.forEach((cell, index) => {
+              ctx.fillRect(cell.x, cell.y, grid - 1, grid - 1);
+              if (cell.x === apple.x && cell.y === apple.y) {
+                snake.maxCells++;
+                apple.x = getRandomInt(0, 20) * grid;
+                apple.y = getRandomInt(0, 20) * grid;
+              }
+              for (let i = index + 1; i < snake.cells.length; i++) {
+                if (cell.x === snake.cells[i].x && cell.y === snake.cells[i].y) {
+                  snake.x = 150;
+                  snake.y = 150;
+                  snake.cells = [];
+                  snake.maxCells = 4;
+                  snake.dx = grid;
+                  snake.dy = 0;
+                }
+              }
+            });
+          }
+          document.addEventListener('keydown', e => {
+            if (e.key === 'ArrowLeft' && snake.dx === 0) {
+              snake.dx = -grid;
+              snake.dy = 0;
+            } else if (e.key === 'ArrowUp' && snake.dy === 0) {
+              snake.dy = -grid;
+              snake.dx = 0;
+            } else if (e.key === 'ArrowRight' && snake.dx === 0) {
+              snake.dx = grid;
+              snake.dy = 0;
+            } else if (e.key === 'ArrowDown' && snake.dy === 0) {
+              snake.dy = grid;
+              snake.dx = 0;
+            }
+          });
+          loop();
+        <\/script>
+      `;
+      createWindow("Jogo Snake", content);
+    }
+
+    // Calculadora
+    function createCalculator() {
+      const content = `
+        <style>
+          .calc-container {
+            width: 220px;
+            margin: auto;
+            user-select: none;
+          }
+          .calc-display {
+            width: 100%;
+            height: 40px;
+            font-size: 18px;
+            text-align: right;
+            padding: 5px;
+            border: 1px solid #ccc;
+            margin-bottom: 8px;
+            box-sizing: border-box;
+            background-color: white;
+            color: black;
+            border-radius: 4px;
+          }
+          .calc-buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+          }
+          .calc-buttons button {
+            font-size: 18px;
+            padding: 10px;
+            cursor: pointer;
+            background-color: #282c34;
+            border: none;
+            color: white;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+          }
+          .calc-buttons button:hover {
+            background-color: #3a3f54;
+          }
+        </style>
+        <div class="calc-container">
+          <input type="text" class="calc-display" id="calcDisplay" readonly />
+          <div class="calc-buttons">
+            <button onclick="calcPress('7')">7</button>
+            <button onclick="calcPress('8')">8</button>
+            <button onclick="calcPress('9')">9</button>
+            <button onclick="calcPress('/')">÷</button>
+            <button onclick="calcPress('4')">4</button>
+            <button onclick="calcPress('5')">5</button>
+            <button onclick="calcPress('6')">6</button>
+            <button onclick="calcPress('*')">×</button>
+            <button onclick="calcPress('1')">1</button>
+            <button onclick="calcPress('2')">2</button>
+            <button onclick="calcPress('3')">3</button>
+            <button onclick="calcPress('-')">−</button>
+            <button onclick="calcPress('0')">0</button>
+            <button onclick="calcPress('.')">.</button>
+            <button onclick="calcClear()">C</button>
+            <button onclick="calcPress('+')">+</button>
+            <button style="grid-column: span 4;" onclick="calcCalculate()">=</button>
+          </div>
+        </div>
+      `;
+
+      createWindow("Calculadora", content);
+
+      window.calcPress = function (val) {
+        const display = document.getElementById("calcDisplay");
+        if (display.value === "Erro") display.value = "";
+        display.value += val;
+      };
+
+      window.calcClear = function () {
+        document.getElementById("calcDisplay").value = "";
+      };
+
+      window.calcCalculate = function () {
+        const display = document.getElementById("calcDisplay");
+        try {
+          if (/^[0-9+\-*/.() ]+$/.test(display.value)) {
+            display.value = eval(display.value);
+          } else {
+            display.value = "Erro";
+          }
+        } catch {
+          display.value = "Erro";
+        }
+      };
+    }
+
+    // Configurações
+    function createSettings() {
+      const content = `
+        <div>
+          <label for="bgColor">Cor de fundo do desktop:</label>
+          <input type="color" id="bgColor" value="#1e1e2e" style="margin-left:10px;" />
+        </div>
+        <div style="margin-top:10px;">
+          <label>Formato do relógio:</label>
+          <select id="clockFormatSelect" style="margin-left:10px;">
+            <option value="24">24 horas</option>
+            <option value="12">12 horas</option>
+          </select>
+        </div>
+      `;
+
+      createWindow("Configurações", content);
+
+      setTimeout(() => {
+        const bgColorInput = document.getElementById("bgColor");
+        const clockSelect = document.getElementById("clockFormatSelect");
+
+        bgColorInput.addEventListener("input", (e) => {
+          document.body.style.backgroundColor = e.target.value;
+        });
+
+        clockSelect.addEventListener("change", (e) => {
+          toggleClockFormat(parseInt(e.target.value));
+        });
+
+        bgColorInput.value = rgbToHex(getComputedStyle(document.body).backgroundColor);
+        clockSelect.value = clockFormat.toString();
+      }, 50);
+    }
+
+    // Helper para converter rgb para hex
+    function rgbToHex(rgb) {
+      const result = rgb.match(/\d+/g);
+      if (!result) return "#000000";
+      return "#" + result.map(x => {
+        const hex = parseInt(x).toString(16);
+        return hex.length === 1 ? "0" + hex : hex;
+      }).join("");
+    }
+
+    // Alternar formato do relógio
+    function toggleClockFormat(format) {
+      clockFormat = format;
+      updateClock();
+    }
+
+    // Fechar menu iniciar clicando fora
+    document.addEventListener('click', (e) => {
+      if (!startMenu.contains(e.target) && e.target !== startBtn) {
+        startMenu.style.display = 'none';
+      }
+    });
+
+    // Traz janela para frente ao clicar
+    desktop.addEventListener('mousedown', e => {
+      const win = e.target.closest('.window');
+      if (!win) return;
+      const wins = document.querySelectorAll('.window');
+      wins.forEach(w => w.style.zIndex = 0);
+      win.style.zIndex = ++zIndexCounter;
+    });
+  </script>
+</body>
+</html>

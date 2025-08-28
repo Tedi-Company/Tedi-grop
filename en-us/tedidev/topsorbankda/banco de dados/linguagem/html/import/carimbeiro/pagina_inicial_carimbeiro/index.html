@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Carimbos Personalizados – Tedi Group</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+
+    header {
+      background-color: #2c3e50;
+      color: white;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    nav a {
+      margin-left: 20px;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .hero {
+      background: url('https://cdn.pixabay.com/photo/2017/01/20/00/30/stamp-1996280_1280.jpg') center/cover no-repeat;
+      padding: 100px 20px;
+      color: white;
+      text-align: center;
+    }
+
+    .hero h2 {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      font-size: 18px;
+    }
+
+    .content {
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    .content h3 {
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: #2c3e50;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 20px 0;
+    }
+
+    .gallery img {
+      width: 100%;
+      border-radius: 8px;
+      border: 2px solid #ccc;
+    }
+
+    .contact {
+      background-color: #ecf0f1;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .contact h4 {
+      font-size: 22px;
+      margin-bottom: 15px;
+    }
+
+    .contact button {
+      padding: 12px 24px;
+      font-size: 16px;
+      border: none;
+      background-color: #2c3e50;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .contact button:hover {
+      background-color: #34495e;
+    }
+
+    footer {
+      background-color: #2c3e50;
+      color: #ccc;
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      position: relative;
+    }
+
+    .marca-agua {
+      position: fixed;
+      right: 10px;
+      bottom: 10px;
+      font-size: 12px;
+      background-color: rgba(0, 0, 0, 0.6);
+      color: white;
+      padding: 6px 10px;
+      border-radius: 4px;
+      z-index: 9999;
+    }
+
+    .marca-agua a {
+      color: #64ffda;
+      text-decoration: none;
+    }
+
+    .marca-agua a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Carimbos Tedi</h1>
+    <nav>
+      <a href="#">Início</a>
+      <a href="#">Produtos</a>
+      <a href="#">Contato</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h2>Carimbos Personalizados Profissionais</h2>
+    <p>Ideal para empresas, escritórios e uso pessoal. Personalize já o seu!</p>
+  </section>
+
+  <section class="content">
+    <h3>Modelos de Carimbos</h3>
+    <div class="gallery">
+      <img src="https://cdn.pixabay.com/photo/2016/03/27/17/48/stamp-1284243_1280.jpg" alt="Carimbo 1" />
+      <img src="https://cdn.pixabay.com/photo/2017/08/06/08/46/stamp-2587732_1280.jpg" alt="Carimbo 2" />
+      <img src="https://cdn.pixabay.com/photo/2015/03/26/09/54/stamp-691000_1280.jpg" alt="Carimbo 3" />
+    </div>
+  </section>
+
+  <section class="contact">
+    <h4>Peça seu carimbo agora mesmo</h4>
+    <button>Solicitar Orçamento</button>
+  </section>
+
+  <footer>
+    &copy; 2025 Tedi Group – Todos os direitos reservados.
+  </footer>
+
+  <div class="marca-agua">
+    feito com <a href="https://tedi-company.github.io/Tedi-grop/criação de sites/index.html" target="_blank">Tedi Group</a>
+  </div>
+
+</body>
+</html>
