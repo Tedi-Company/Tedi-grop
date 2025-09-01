@@ -1,10 +1,10 @@
 # Tedi-grop
-Web site da tedi group.
+Tedi Group website.
 
-nosso site😎: https://tedi-company.github.io/Tedi-grop/
-nosso github: https://github.com/Tedi-Company
-nosso gitlab: https://gitlab.com/Tedi-Company
-nosso blog: https://tedi-company.github.io/Tedi-grop/blog/index.html
+Our website: https://tedi-company.github.io/Tedi-grop/
+Our GitHub: https://github.com/Tedi-Company
+Our GitHub: https://gitlab.com/Tedi-Company
+Our blog: https://tedi-company.github.io/Tedi-grop/blog/index.html
 
 😎😃🕹️👍👍👍🎶
 
