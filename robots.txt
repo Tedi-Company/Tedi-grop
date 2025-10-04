@@ -1,0 +1,15 @@
+# robots.txt - Tedi Group
+# Permitir indexação apenas das pastas principais
+
+User-agent: *
+Disallow: /
+
+# Permitir apenas as seções públicas:
+Allow: /tedidev/
+Allow: /criação%20de%20sites/
+Allow: /jogos/
+Allow: /educacao/
+Allow: /educacao/loja/
+
+# Sitemap (muito importante para SEO)
+Sitemap: https://tedi-company.github.io/Tedi-grop/sitemap.xml
