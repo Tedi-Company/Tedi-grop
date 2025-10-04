@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset 
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Página inicial -->
+  <url>
+    <loc>https://tedi-company.github.io/Tedi-grop/</loc>
+    <lastmod>2025-10-04</lastmod>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- TEDIDEV -->
+  <url>
+    <loc>https://tedi-company.github.io/Tedi-grop/tedidev/</loc>
+    <lastmod>2025-10-04</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Criação de sites -->
+  <url>
+    <loc>https://tedi-company.github.io/Tedi-grop/criação%20de%20sites/</loc>
+    <lastmod>2025-10-04</lastmod>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Jogos -->
+  <url>
+    <loc>https://tedi-company.github.io/Tedi-grop/jogos/</loc>
+    <lastmod>2025-10-04</lastmod>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Educação -->
+  <url>
+    <loc>https://tedi-company.github.io/Tedi-grop/educacao/</loc>
+    <lastmod>2025-10-04</lastmod>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Loja dentro de Educação -->
+  <url>
+    <loc>https://tedi-company.github.io/Tedi-grop/educacao/loja/</loc>
+    <lastmod>2025-10-04</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+</urlset>
