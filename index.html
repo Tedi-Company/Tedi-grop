@@ -357,6 +357,28 @@
           perfilDiv.style.marginLeft = "10px";
 
           navUl.appendChild(perfilDiv);
+
+          // Tempo de inatividade em milissegundos (15 minutos)
+    const INATIVIDADE = 15 * 60 * 1000; // 15 minutos = 900000ms
+    let timer;
+
+    // Função que redireciona para a tela de espera
+    function irParaTelaDeEspera() {
+        window.location.href = "/tela-de-espera/index.html";
+    }
+
+    // Reseta o timer sempre que houver atividade
+    function resetarTimer() {
+        clearTimeout(timer);
+        timer = setTimeout(irParaTelaDeEspera, INATIVIDADE);
+    }
+
+    // Detecta qualquer movimento do mouse ou teclado
+    document.addEventListener("mousemove", resetarTimer);
+    document.addEventListener("keydown", resetarTimer);
+
+    // Inicializa o timer quando a página carrega
+    window.addEventListener("load", resetarTimer);
         }
       }
     })
