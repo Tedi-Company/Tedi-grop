@@ -54,14 +54,6 @@
     <div id="sub-text">Esta é uma tela de inatividade</div>
 
     <script>
-        // Desaparece o logo após 3 repetições da animação
-        document.addEventListener("DOMContentLoaded", function() {
-            const logo = document.getElementById("logo-text");
-            setTimeout(() => {
-                logo.style.display = "none";
-            }, 3000);
-        });
-
         // Redireciona para /index.html ao mover o mouse
         document.addEventListener("mousemove", function() {
             window.location.href = "../index.html";
