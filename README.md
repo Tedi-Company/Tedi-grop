@@ -8,4 +8,4 @@ nosso blog: https://tedi-company.github.io/Tedi-grop/blog/index.html
 
 😎😃🕹️👍👍👍🎶
 
-<img width="314" height="317" alt="logo" src="https://github.com/user-attachments/assets/5657e86f-4ba8-466c-b4fc-1c9621e901d2" />
+<img width="345" height="348" alt="tedi dançante" src="https://github.com/user-attachments/assets/bd962def-d531-4fbf-b7df-2ea190b4a2f1" />
