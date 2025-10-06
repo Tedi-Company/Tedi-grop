@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Tedi Group – Início</title>
-  <link id="icon" rel="favicon" type="image/gif" href="logo dançante.gif">
+  <link id="favicon" rel="icon" type="image/png" href="tedi dançante.png">
   <style>
    body {
       margin: 0;
@@ -322,23 +322,23 @@
   </footer>
 
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const favicons = [
-        "tedi dançante.svg",
-        "tedi dançante2.svg",
-        "tedi dançante3.svg",
-        "tedi dançante4.svg"
-      ];
+// Lista de frames da animação
+    const frames = [
+      "tedi dançante.png",
+      "tedi dançante2.png",
+      "tedi dançante3.png",
+      "tedi dançante4.png"
+    ];
 
-      let i = 0;
-      const link = document.getElementById("favicon");
+    let i = 0;
+    const favicon = document.getElementById("favicon");
 
-      // Troca o favicon a cada 150ms (ajuste se quiser mais rápido ou lento)
-      setInterval(() => {
-        i = (i + 1) % favicons.length;
-        link.href = favicons[i];
-      }, 150);
-      
+    // Troca o favicon a cada 200ms (ajuste a velocidade se quiser)
+    setInterval(() => {
+      i = (i + 1) % frames.length;
+      favicon.href = frames[i] + "?v=" + Date.now(); // evita cache
+    }, 200);
+    
     fetch("https://login-e-cadastro.onrender.com/api/status", {
       credentials: "include"
     })
