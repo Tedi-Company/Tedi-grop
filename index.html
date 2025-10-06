@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -333,11 +334,11 @@
     let i = 0;
     const favicon = document.getElementById("favicon");
 
-    // Troca o favicon a cada 200ms (ajuste a velocidade se quiser)
+    // Troca o favicon a cada 150ms (ajuste a velocidade se quiser)
     setInterval(() => {
       i = (i + 1) % frames.length;
       favicon.href = frames[i] + "?v=" + Date.now(); // evita cache
-    }, 200);
+    }, 150);
     
     fetch("https://login-e-cadastro.onrender.com/api/status", {
       credentials: "include"
