@@ -6,7 +6,7 @@ nosso github: https://github.com/Tedi-Company
 nosso gitlab: https://gitlab.com/Tedi-Company
 nosso blog: https://tedi-company.github.io/Tedi-grop/blog/index.html
 nosso contentDB: https://content.luanti.org/users/Tedi-Company
-TerrasAbertas: [![ContentDB](https://content.luanti.org/packages/Tedi-Company/open_lands/shields/title/)](https://content.luanti.org/packages/Tedi-Company/open_lands/) [![ContentDB](https://content.luanti.org/packages/Tedi-Company/open_lands/shields/downloads/)](https://content.luanti.org/packages/Tedi-Company/open_lands/) 
+[![ContentDB](https://content.luanti.org/packages/Tedi-Company/open_lands/shields/title/)](https://content.luanti.org/packages/Tedi-Company/open_lands/) [![ContentDB](https://content.luanti.org/packages/Tedi-Company/open_lands/shields/downloads/)](https://content.luanti.org/packages/Tedi-Company/open_lands/) 
 
 😎😃🕹️👍👍👍🎶
 
