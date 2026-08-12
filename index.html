@@ -276,12 +276,18 @@
     </nav>
   </header>
 
-  <main>
+    <main>
     <h1>Bem-vindo à Tedi Group</h1>
     <p>Oferecemos jogos, conteúdos educacionais e soluções inovadoras para todos os públicos.</p>
     <a class="btn" href="/Tedi-grop/jogos/index.html">Explorar Jogos</a><br>
-    <a class="btn btn-secondary" href="/Tedi-grop/pagina_inicial_2/index.html">Ver página antiga</a>
+    <a class="btn btn-secondary" href="/Tedi-grop/pagina_inicial_2/index.html">Ver página antiga</a><br>
+    
+    <!-- BOTÕES DO AUTH0 NO HTML -->
+    <button id="btn-login" class="btn" style="margin-top: 15px; background-color: #64ffda; color: #0a192f; border: none; cursor: pointer;">Entrar no Sistema</button>
+    <button id="btn-logout" class="btn" style="margin-top: 15px; background-color: #ff6464; color: #0a192f; border: none; cursor: pointer; display: none;">Sair da Conta</button>
+    <p id="user-greeting" style="margin-top: 10px; color: #64ffda; font-size: 16px; display: none;"></p>
   </main>
+
 
   <main>
     <h1>Lembre-se: A Tedi Group é um projeto e não uma empresa</h1>
@@ -321,8 +327,8 @@
     &copy; 2025 Tedi Group. Todos os direitos reservados.
   </footer>
 
-  <script>
-// Lista de frames da animação
+    <script>
+    // Lista de frames da animação
     const frames = [
       "tedi dançante.png",
       "tedi dançante2.png",
@@ -332,6 +338,15 @@
 
     let i = 0;
     const favicon = document.getElementById("favicon");
+
+    // Troca o favicon a cada 150ms
+    setInterval(() => {
+      i = (i + 1) % frames.length;
+      favicon.href = frames[i] + "?v=" + Date.now(); // evita cache
+    }, 150);
+  </script> <!-- Esse é o fechamento do seu script da animação que aparece na imagem -->
+    <script src="https://auth0.com"></script>
+  <script src="main.js"></script>
 
     // Troca o favicon a cada 150ms (ajuste a velocidade se quiser)
     setInterval(() => {
